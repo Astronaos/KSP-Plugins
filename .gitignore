@@ -16,6 +16,12 @@
 *.dylib
 *.dll
 
+# Visual Studio Files
+*.pdb
+*.cache
+*.FileListAbsolute.txt
+*.CopyComplete
+
 # Fortran module files
 *.mod
 *.smod
@@ -30,3 +36,5 @@
 *.exe
 *.out
 *.app
+
+
