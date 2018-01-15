@@ -112,6 +112,7 @@ namespace KSP_ASOS
                 cCOMM.iStation_ID_Characters[3] = 15; // P
                 cCOMM.buildStationID();
                 sStation_ID = cCOMM.sStation_ID;
+                dFrequency = cCOMM.getFrequency();
             }
             if (cNav_Master == null)
                 cNav_Master = new NAVmaster();
@@ -139,6 +140,8 @@ namespace KSP_ASOS
             base.OnLoad(node);
             if (cCOMM != null)
                 cCOMM.OnLoad(node);
+            sStation_ID = cCOMM.sStation_ID;
+            dFrequency = cCOMM.getFrequency();
         }
         public override void OnSave(ConfigNode node)
         {
