@@ -24,6 +24,8 @@
 *.suo
 db.lock
 storage.ide
+*.ide-shm
+*.ide-wal
 
 # Fortran module files
 *.mod
