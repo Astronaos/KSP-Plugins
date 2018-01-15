@@ -158,7 +158,7 @@ namespace KSP_COMM_Receiver
                         COMM cComm = cTuned_Station as COMM;
                         if (cComm != null)
                         {
-                            ScreenMessages.PostScreenMessage(cComm.sMessage, 5.0f, ScreenMessageStyle.UPPER_CENTER);
+                            ScreenMessages.PostScreenMessage(cComm.sMessage, 10.0f, ScreenMessageStyle.UPPER_CENTER);
                         }
                         dReceiver_Timer = 0.0;
                     }
