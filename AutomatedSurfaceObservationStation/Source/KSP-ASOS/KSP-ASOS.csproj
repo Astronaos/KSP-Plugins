@@ -4,7 +4,7 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{311D280F-378B-4BB2-BDAD-641CD70DEDA8}</ProjectGuid>
+    <ProjectGuid>{14293466-EDF2-4642-BCCB-A75D74A046E6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>KSP_ASOS</RootNamespace>
@@ -35,11 +35,11 @@
       <Private>False</Private>
     </Reference>
     <Reference Include="KSP-ADM">
-      <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Kerbal Space Program\GameData\MyParts\KSP-ADM.dll</HintPath>
+      <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Kerbal Space Program\GameData\Astronaos\KSP-ADM.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="KSP-NAVmaster">
-      <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Kerbal Space Program\GameData\MyParts\KSP-NAVmaster.dll</HintPath>
+      <HintPath>..\..\..\..\..\Program Files (x86)\Steam\steamapps\common\Kerbal Space Program\GameData\Astronaos\KSP-NAVmaster.dll</HintPath>
       <Private>False</Private>
     </Reference>
     <Reference Include="System" />
@@ -63,7 +63,9 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>copy /Y "$(TargetDir)$(ProjectName).dll" "C:\Program Files (x86)\Steam\steamapps\common\Kerbal Space Program\GameData\MyParts\$(ProjectName).dll"</PostBuildEvent>
+    <PostBuildEvent>copy /Y "$(TargetDir)$(ProjectName).dll" "C:\Program Files (x86)\Steam\steamapps\common\Kerbal Space Program\GameData\Astronaos\$(ProjectName).dll"
+copy /Y "$(TargetDir)..\..\..\..\Parts\part.cfg" "C:\Program Files (x86)\Steam\steamapps\common\Kerbal Space Program\GameData\Astronaos\Parts\$(ProjectName)\."
+</PostBuildEvent>
   </PropertyGroup>
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
