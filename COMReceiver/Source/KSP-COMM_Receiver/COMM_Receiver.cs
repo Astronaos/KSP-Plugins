@@ -40,6 +40,19 @@ namespace KSP_COMM_Receiver
             cNav_Master.updateReceiver(iReceiver_ID, cRecv);
             dStandby_Frequency = cRecv.getStandbyFrequency();
         }
+        [KSPEvent(guiActive = true, guiActiveEditor = true, guiName = "Frequency Select Up (1 MHz)")]
+        public void nextFrequencyLarge()
+        {
+            cRecv.incrementChannelLarge();
+            dFrequency = cRecv.getFrequency();
+        }
+        [KSPEvent(guiActive = true, guiActiveEditor = true, guiName = "Frequency Select Down (1 MHz)")]
+        public void prevFrequencyLarge()
+        {
+            cRecv.decrementChannelLarge();
+            dFrequency = cRecv.getFrequency();
+        }
+
         [KSPEvent(guiActive = true, guiActiveEditor = true, guiName = "<-->")]
         public void swapFrequency()
         {
@@ -50,7 +63,6 @@ namespace KSP_COMM_Receiver
         }
 
         NAVbase cTuned_Station = null;
-        NAVbase cTuned_GLS = null;
 
         // Estimating from the Z-400 battery, which weights 20 kg (0.02 t) and has a charge of 400, and a "typical" Li battery that stores about 18 kJ in 20g, 
         // the battery contains 18 MJ, meaning 1 charge unit is about 45 kJ. This leads to charge demand 1 = 45 kW, or 0.00060 = 27 W, typical for a commercial aircraft ADU
@@ -70,7 +82,7 @@ namespace KSP_COMM_Receiver
             if (iReceiver_ID == -1)
                 iReceiver_ID = cNav_Master.registerReceiver(cRecv);
         }
-    public override void OnActive()
+        public override void OnActive()
         {
         }
         public override void OnAwake()
@@ -87,6 +99,8 @@ namespace KSP_COMM_Receiver
             cRecv.vPosition.updatePositionData(vessel.mainBody, vessel.latitude, vessel.longitude, vessel.altitude);
             if (iReceiver_ID != -1)
                 cNav_Master.updateReceiver(iReceiver_ID, cRecv);
+            dFrequency = cRecv.getFrequency();
+            dStandby_Frequency = cRecv.getStandbyFrequency();
         }
         public override void OnSave(ConfigNode node)
         {
@@ -132,7 +146,6 @@ namespace KSP_COMM_Receiver
             else
             {
                 cTuned_Station = null;
-                cTuned_GLS = null;
             }
             if (cTuned_Station != null)
             {
@@ -161,8 +174,6 @@ namespace KSP_COMM_Receiver
                 dReceiver_Timer = 0.0;
                 sTuned_Station = "---";
             }
-
-
         }
-}
+    }
 }
