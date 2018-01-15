@@ -21,6 +21,9 @@
 *.cache
 *.FileListAbsolute.txt
 *.CopyComplete
+*.suo
+db.lock
+storage.ide
 
 # Fortran module files
 *.mod
