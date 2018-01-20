@@ -137,6 +137,7 @@ namespace KSP_ASOS
 
         public override void OnLoad(ConfigNode node)
         {
+            initialize();
             base.OnLoad(node);
             if (cCOMM != null)
                 cCOMM.OnLoad(node);
@@ -164,6 +165,7 @@ namespace KSP_ASOS
 
         public override void OnStart(StartState state)
         {
+            initialize();
             register();
             cCOMM.vPosition.updatePositionData(vessel.mainBody, vessel.latitude, vessel.longitude, vessel.altitude);
             cNav_Master.updateStation(iStation_ID, cCOMM);
