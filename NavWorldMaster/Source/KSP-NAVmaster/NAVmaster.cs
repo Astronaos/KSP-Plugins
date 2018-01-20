@@ -392,6 +392,40 @@ namespace KSP_World_Nav
         }
     }
 
+    public class DME : NAVbase
+    {
+        public override double getFrequency()
+        {
+            double dFrequency;
+            dFrequency = 108.0 + iChannel * 0.05f;
+            return dFrequency;
+        }
+        public override void incrementChannel()
+        {
+            iChannel++;
+            if (iChannel > 199)
+                iChannel -= 200;
+        }
+        public override void decrementChannel()
+        {
+            iChannel--;
+            if (iChannel < 0)
+                iChannel += 200;
+        }
+        public override void incrementChannelLarge()
+        {
+            iChannel += 20;
+            if (iChannel > 199)
+                iChannel -= 200;
+        }
+        public override void decrementChannelLarge()
+        {
+            iChannel -= 20;
+            if (iChannel < 0)
+                iChannel += 200;
+        }
+    }
+
     public class VOR : NAVbase
     {
         public override double getFrequency()
@@ -1061,6 +1095,69 @@ namespace KSP_World_Nav
                     if (Math.Abs(listReceiver[i_iReceiver_ID].listStations[i].dFrequency - listReceiver[i_iReceiver_ID].cReceiver.getFrequency()) < 0.01)
                     {
                         iStation = listReceiver[i_iReceiver_ID].listStations[i].iStation_ID;
+                    }
+                }
+                if (iStation != -1)
+                    cRet = listStations[iStation];
+            }
+            return cRet;
+        }
+        public NAVbase getStationDME(int i_iReceiver_ID)
+        { // an ILS 
+            NAVbase cRet = null;
+            if (listReceiver != null && i_iReceiver_ID > 0 && i_iReceiver_ID < listReceiver.Count && listReceiver[i_iReceiver_ID].listStations != null)
+            {
+                int iStation = -1;
+                for (int i = 0; i < listReceiver[i_iReceiver_ID].listStations.Count && iStation == -1; i++)
+                {
+                    // find the first station in the list that has the right frequency. the list is already sorted by flux
+                    if (Math.Abs(listReceiver[i_iReceiver_ID].listStations[i].dFrequency - listReceiver[i_iReceiver_ID].cReceiver.getFrequency()) < 0.01)
+                    {
+                        DME cStationDME = listStations[listReceiver[i_iReceiver_ID].listStations[i].iStation_ID] as DME;
+                        if (cStationDME != null)
+                            iStation = listReceiver[i_iReceiver_ID].listStations[i].iStation_ID;
+                    }
+                }
+                if (iStation != -1)
+                    cRet = listStations[iStation];
+            }
+            return cRet;
+        }
+        public NAVbase getStationVOR(int i_iReceiver_ID)
+        { // an ILS 
+            NAVbase cRet = null;
+            if (listReceiver != null && i_iReceiver_ID > 0 && i_iReceiver_ID < listReceiver.Count && listReceiver[i_iReceiver_ID].listStations != null)
+            {
+                int iStation = -1;
+                for (int i = 0; i < listReceiver[i_iReceiver_ID].listStations.Count && iStation == -1; i++)
+                {
+                    // find the first station in the list that has the right frequency. the list is already sorted by flux
+                    if (Math.Abs(listReceiver[i_iReceiver_ID].listStations[i].dFrequency - listReceiver[i_iReceiver_ID].cReceiver.getFrequency()) < 0.01)
+                    {
+                        VOR cStationVOR = listStations[listReceiver[i_iReceiver_ID].listStations[i].iStation_ID] as VOR;
+                        if (cStationVOR != null)
+                            iStation = listReceiver[i_iReceiver_ID].listStations[i].iStation_ID;
+                    }
+                }
+                if (iStation != -1)
+                    cRet = listStations[iStation];
+            }
+            return cRet;
+        }
+        public NAVbase getStationLOC(int i_iReceiver_ID)
+        { // an ILS 
+            NAVbase cRet = null;
+            if (listReceiver != null && i_iReceiver_ID > 0 && i_iReceiver_ID < listReceiver.Count && listReceiver[i_iReceiver_ID].listStations != null)
+            {
+                int iStation = -1;
+                for (int i = 0; i < listReceiver[i_iReceiver_ID].listStations.Count && iStation == -1; i++)
+                {
+                    // find the first station in the list that has the right frequency. the list is already sorted by flux
+                    if (Math.Abs(listReceiver[i_iReceiver_ID].listStations[i].dFrequency - listReceiver[i_iReceiver_ID].cReceiver.getFrequency()) < 0.01)
+                    {
+                        LOC cStationLOC = listStations[listReceiver[i_iReceiver_ID].listStations[i].iStation_ID] as LOC;
+                        if (cStationLOC != null)
+                            iStation = listReceiver[i_iReceiver_ID].listStations[i].iStation_ID;
                     }
                 }
                 if (iStation != -1)
