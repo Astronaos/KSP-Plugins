@@ -11,6 +11,11 @@ namespace KSP_NAV_Receiver
         private VHFreceiver cRecv = new VHFreceiver();
         private NAVmaster cNav_Master = new NAVmaster();
 
+        private int iNav_ID = -1;
+        public int getNavID() { return iNav_ID; }
+
+        public VectorBody getPosition() { return cRecv.vPosition; }
+
         [KSPField(isPersistant = true, guiActive = true, guiActiveEditor = true, guiName = "Power"), UI_Toggle(disabledText = "Off", enabledText = "On")]
         public bool bOn = false;
 
@@ -40,6 +45,20 @@ namespace KSP_NAV_Receiver
             cNav_Master.updateReceiver(iReceiver_ID, cRecv);
             dStandby_Frequency = cRecv.getStandbyFrequency();
         }
+        [KSPEvent(guiActive = true, guiActiveEditor = true, guiName = "Frequency Select Up (1 MHz)")]
+        public void nextFrequencyLarge()
+        {
+            cRecv.incrementStandbyChannelLarge();
+            cNav_Master.updateReceiver(iReceiver_ID, cRecv);
+            dStandby_Frequency = cRecv.getStandbyFrequency();
+        }
+        [KSPEvent(guiActive = true, guiActiveEditor = true, guiName = "Frequency Select Down (1 MHz)")]
+        public void prevFrequencyLarge()
+        {
+            cRecv.decrementStandbyChannelLarge();
+            cNav_Master.updateReceiver(iReceiver_ID, cRecv);
+            dStandby_Frequency = cRecv.getStandbyFrequency();
+        }
         [KSPEvent(guiActive = true, guiActiveEditor = true, guiName = "<-->")]
         public void swapFrequency()
         {
@@ -49,8 +68,14 @@ namespace KSP_NAV_Receiver
             dStandby_Frequency = cRecv.getStandbyFrequency();
         }
 
-        NAVbase cTuned_Station = null;
-        NAVbase cTuned_GLS = null;
+        VOR cTuned_VOR = null;
+        LOC cTuned_LOC = null;
+        GLS cTuned_GLS = null;
+        DME cTuned_DME = null;
+        public VOR getTunedVOR() { return cTuned_VOR; }
+        public DME getTunedDME() { return cTuned_DME; }
+        public LOC getTunedLOC() { return cTuned_LOC; }
+        public GLS getTunedGLS() { return cTuned_GLS;  }
 
         // Estimating from the Z-400 battery, which weights 20 kg (0.02 t) and has a charge of 400, and a "typical" Li battery that stores about 18 kJ in 20g, 
         // the battery contains 18 MJ, meaning 1 charge unit is about 45 kJ. This leads to charge demand 1 = 45 kW, or 0.00060 = 27 W, typical for a commercial aircraft ADU
@@ -63,6 +88,26 @@ namespace KSP_NAV_Receiver
                 cRecv = new VHFreceiver();
             if (cNav_Master == null)
                 cNav_Master = new NAVmaster();
+            if (iNav_ID == -1)
+            {
+                int iOtherCount = -1;
+                foreach (Part p in vessel.Parts)
+                {
+                    foreach (PartModule m in p.Modules)
+                    {
+                        VHF_NAV_Receiver cOtherRcvr = m as VHF_NAV_Receiver;
+                        if (cOtherRcvr != null)
+                        {
+                            if (cOtherRcvr.iNav_ID > iOtherCount)
+                                iOtherCount = cOtherRcvr.iNav_ID;
+                        }
+                    }
+                }
+                if (iOtherCount == -1)
+                    iNav_ID = 1;
+                else
+                    iNav_ID = iOtherCount + 1;
+            }
         }
         private void register()
         {
@@ -126,30 +171,67 @@ namespace KSP_NAV_Receiver
             cNav_Master.onReceiverUpdate();
             if (bPowered)
             {
-                cTuned_Station = cNav_Master.getStation(iReceiver_ID);
                 if (cRecv.isActiveILS())
                 {
-                    cTuned_GLS = cNav_Master.getStationGLS(iReceiver_ID);
+                    cTuned_GLS = cNav_Master.getStationGLS(iReceiver_ID) as GLS;
+                    cTuned_LOC = cNav_Master.getStationLOC(iReceiver_ID) as LOC;
+                    cTuned_VOR = null;
                 }
                 else
+                { 
+                    cTuned_VOR = cNav_Master.getStationVOR(iReceiver_ID) as VOR;
                     cTuned_GLS = null;
+                    cTuned_LOC = null;
+                }
+                cTuned_DME = cNav_Master.getStationDME(iReceiver_ID) as DME;
             }
             else
             {
-                cTuned_Station = null;
+                cTuned_VOR = null;
+                cTuned_LOC = null;
+                cTuned_DME = null;
                 cTuned_GLS = null;
             }
-            if (cTuned_Station != null)
+            if (cTuned_VOR != null)
             {
-                if (cTuned_Station.getFlux(cRecv.vPosition) > 2.0e-9)
-                    sTuned_Station = cTuned_Station.sStation_ID;
-                else
-                    sTuned_Station = "---";
+                if (cTuned_VOR.getFlux(cRecv.vPosition) < 2.0e-9 || !cTuned_VOR.inLineOfSight(cRecv.vPosition))
+                    cTuned_VOR = null;
+            }
+            if (cTuned_LOC != null)
+            {
+                if (cTuned_LOC.getFlux(cRecv.vPosition) < 2.0e-9 || !cTuned_LOC.inLineOfSight(cRecv.vPosition))
+                    cTuned_LOC = null;
+            }
+            if (cTuned_DME != null)
+            {
+                if (cTuned_DME.getFlux(cRecv.vPosition) < 2.0e-9 || !cTuned_DME.inLineOfSight(cRecv.vPosition))
+                    cTuned_DME = null;
+            }
+            if (cTuned_GLS != null)
+            {
+                if (cTuned_GLS.getFlux(cRecv.vPosition) > 2.0e-9 || !cTuned_GLS.inLineOfSight(cRecv.vPosition))
+                    cTuned_GLS = null;
+            }
+
+            if (cTuned_VOR != null)
+            {
+                sTuned_Station = cTuned_VOR.sStation_ID;
+            }
+            else if (cTuned_LOC != null)
+            {
+                sTuned_Station = cTuned_LOC.sStation_ID;
+            }
+            else if (cTuned_DME != null)
+            {
+                sTuned_Station = cTuned_LOC.sStation_ID;
+            }
+            else if (cTuned_GLS != null)
+            {
+                sTuned_Station = cTuned_GLS.sStation_ID;
             }
             else
                 sTuned_Station = "---";
 
-
         }
-}
+    }
 }
