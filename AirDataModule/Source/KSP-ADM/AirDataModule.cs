@@ -137,6 +137,21 @@ namespace KSP_ADM
                 }
             }
         }
+        public void checkVSTables()
+        {
+            if (adAltitudes == null)
+            {
+                adAltitudes = new double[100];
+                for (int i = 0; i < 100; i++)
+                    adAltitudes[i] = 0;
+            }
+            if (adAltitude_Times == null)
+            { 
+                adAltitude_Times = new double[100];
+                for (int i = 0; i < 100; i++)
+                    adAltitude_Times[i] = -1;
+            }
+        }
         public void initialize()
         {
             dMean_Mass_Air = 1.660539040e-27 * (
@@ -150,15 +165,7 @@ namespace KSP_ADM
                        dXenon_Atomic_Weight * 0.0000004);
             dStatic_Press_Sea_Level_Pa = -1; // force table generation when setSeaLevelPressure called below
             AtmosphericConstant = -dMean_Mass_Air * StandardGravitationalParameterKerbin / (KerbinRadius * KerbinRadius) / BoltzmannConstant;
-            if (adAltitudes == null)
-                adAltitudes = new double[100];
-            if (adAltitude_Times == null)
-                adAltitude_Times = new double[100];
-            for (int i = 0; i < 100; i++)
-            {
-                adAltitude_Times[i] = -1;
-                adAltitudes[i] = 0;
-            }
+            checkVSTables();
             setSeaLevelPressure(101325.0);
         }
 
@@ -219,6 +226,7 @@ namespace KSP_ADM
 
         public void performSample(double i_dStatic_Pressure_Pa, double i_dDynamic_Pressure_Pa, double i_dTotal_Air_Temperature_K, double i_dTime_s)
         {
+            checkVSTables();
             if (dStatic_Press_Sea_Level_Pa == -1)
                 initialize();
             dTotal_Pressure = i_dStatic_Pressure_Pa + i_dDynamic_Pressure_Pa;
@@ -261,7 +269,7 @@ namespace KSP_ADM
                 dAir_Number_Density = i_dStatic_Pressure_Pa / (dStatic_Air_Temp * BoltzmannConstant);
                 dAir_Density = dAir_Number_Density * dMean_Mass_Air;
 
-
+/*
                 int i;
                 for (i = 0; i < 100 && (i_dTime_s - adAltitude_Times[i]) < 2.0; i++) ;
                 for (; i > 0; i--)
@@ -281,7 +289,7 @@ namespace KSP_ADM
                         dVertical_Speed = (adAltitudes[i] - adAltitudes[0]) / (adAltitude_Times[i] - adAltitude_Times[0]);
                         i = 100;
                     }
-                }
+                }*/
             }
         }
     }
