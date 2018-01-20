@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KSP-NAVmaster", "KSP-NAVmaster\KSP-NAVmaster.csproj", "{311D280F-378B-4BB2-BDAD-641CD70DEDA8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KSP-NAVmaster", "KSP-NAVmaster\KSP-NAVmaster.csproj", "{A6A0C012-B457-4700-8A47-4B49B7F3B3A2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,12 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{311D280F-378B-4BB2-BDAD-641CD70DEDA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{311D280F-378B-4BB2-BDAD-641CD70DEDA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{311D280F-378B-4BB2-BDAD-641CD70DEDA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{311D280F-378B-4BB2-BDAD-641CD70DEDA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A6A0C012-B457-4700-8A47-4B49B7F3B3A2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A6A0C012-B457-4700-8A47-4B49B7F3B3A2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A6A0C012-B457-4700-8A47-4B49B7F3B3A2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A6A0C012-B457-4700-8A47-4B49B7F3B3A2}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {D66685FF-C794-462B-AA7E-FEC59CFE7AAA}
 	EndGlobalSection
 EndGlobal

@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 14
-VisualStudioVersion = 14.0.25420.1
+# Visual Studio 15
+VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KSP-NAV_Receiver", "KSP-NAV_Receiver\KSP-NAV_Receiver.csproj", "{311D280F-378B-4BB2-BDAD-641CD70DEDA8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "KSP-NAV_Receiver", "KSP-NAV_Receiver\KSP-NAV_Receiver.csproj", "{6907DA1A-E763-4FA6-BDEC-499E1032E9AD}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,12 +11,15 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{311D280F-378B-4BB2-BDAD-641CD70DEDA8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{311D280F-378B-4BB2-BDAD-641CD70DEDA8}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{311D280F-378B-4BB2-BDAD-641CD70DEDA8}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{311D280F-378B-4BB2-BDAD-641CD70DEDA8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6907DA1A-E763-4FA6-BDEC-499E1032E9AD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6907DA1A-E763-4FA6-BDEC-499E1032E9AD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6907DA1A-E763-4FA6-BDEC-499E1032E9AD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6907DA1A-E763-4FA6-BDEC-499E1032E9AD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {5289A7FC-C518-4F71-91E3-9F2FAA2EBB38}
 	EndGlobalSection
 EndGlobal
