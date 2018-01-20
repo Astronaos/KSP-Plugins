@@ -43,13 +43,13 @@ namespace KSP_COMM_Receiver
         [KSPEvent(guiActive = true, guiActiveEditor = true, guiName = "Frequency Select Up (1 MHz)")]
         public void nextFrequencyLarge()
         {
-            cRecv.incrementChannelLarge();
+            cRecv.incrementStandbyChannelLarge();
             dFrequency = cRecv.getFrequency();
         }
         [KSPEvent(guiActive = true, guiActiveEditor = true, guiName = "Frequency Select Down (1 MHz)")]
         public void prevFrequencyLarge()
         {
-            cRecv.decrementChannelLarge();
+            cRecv.decrementStandbyChannelLarge();
             dFrequency = cRecv.getFrequency();
         }
 
